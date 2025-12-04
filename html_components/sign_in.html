@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planet Gym Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css_components/sign_in.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="image-side">
+      <img src="../images/gym.png" alt="Gym" />
+    </div>
+     
+    <div class="form-side">
+        <h3 style="margin-bottom: 10px;color: rgb(221, 112, 10);">Planet Gym</h3>
+
+       <h1>Welcome back!</h1>
+      <p>Sign in to manage your gym.</p>
+      <form id="loginForm">
+        <input type="email" placeholder="Email" id="email" required>
+        <input type="password" placeholder="Password" id="password" required>
+        <!-- Hidden role input (always Admin) -->
+<input type="hidden" name="role" value="Admin">
+
+<div class="roles">
+ <label class="admin-label">
+  <i class="fa-solid fa-user-circle"></i> Admin
+</label>
+
+</div>
+
+        <button type="submit">Sign In</button>
+        <a href="#" class="forgot-password">Forgot password?</a>
+      </form>
+    </div>
+  </div>
+  <script src="../js_components/sign_in.js"></script>
+</body>
+</html>
