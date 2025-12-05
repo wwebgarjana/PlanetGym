@@ -1,37 +1,35 @@
 const loginForm = document.getElementById('loginForm');
 
-loginForm.addEventListener('submit', function(e){
-    e.preventDefault();
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const role = document.querySelector('input[name="role"]').value;
+
+  // 1️⃣ FIRST TIME HARDCODED LOGIN
+  if (email === "aaa@gmail.com" && password === "1234") {
+    const res = await window.api.saveUser(email, password, role);
     
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const role = document.querySelector('input[name="role"]').value;
-
-    // Hardcoded credentials
-    const hardcodedEmail = "admin@planetgym.com";
-    const hardcodedPassword = "123456";
-
-    if(email === hardcodedEmail && password === hardcodedPassword){
-        alert(`Logged in as ${role} with email ${email}`);
-
-        // Save login info to SQLite
-        const sqlite3 = require("sqlite3").verbose();
-        const path = require("path");
-
-        const dbPath = path.join(__dirname, "../database/planetgym.db");
-        const db = new sqlite3.Database(dbPath);
-
-        db.run(
-            "INSERT INTO users (email, password, role) VALUES (?, ?, ?)",
-            [email, password, role],
-            function(err){
-                if(err) console.error("DB Insert Error:", err);
-                else console.log("User saved to DB!");
-            }
-        );
-
-        db.close();
+    if (res.success) {
+      alert("First Login Successful (Saved to DB)");
     } else {
-        alert("Invalid email or password.");
+      alert("User already exists! Logging you in...");
     }
+
+    window.location.href = "dashboard.html";  
+    return;
+  }
+
+  // 2️⃣ NEXT TIME — CHECK FROM DATABASE
+  const loginCheck = await window.api.checkLogin(email, password);
+
+  if (loginCheck.success) {
+    alert("Login Success!");
+
+    // PAGE REFRESH + REDIRECT
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Incorrect email or password!");
+  }
 });

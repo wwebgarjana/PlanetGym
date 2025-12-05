@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Gym Dashboard</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <!-- Sidebar CSS -->
+    <link rel="stylesheet" href="../css_components/sidebar.css">
+     <link rel="stylesheet" href="../css_components/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+ 
+  <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+ 
+<div class="main">
+    <div class="topbar">
+        <input type="text" placeholder="Search">
+       <div class="top-icons">
+    <span class="bell"><i class="fa-solid fa-bell"></i></span>
+    <span class="user"><i class="fa-solid fa-user"></i></span>
+</div>
+
+    </div>
+ 
+    <div class="stats">
+        <div class="card">
+            <p>Total Members</p>
+            <h2>120</h2>
+        </div>
+        <div class="card">
+            <p>Active Today</p>
+            <h2>47</h2>
+        </div>
+        <div class="card">
+            <p>Revenue</p>
+            <h2>₹38,500</h2>
+        </div>
+        <div class="card">
+            <p>Trainers</p>
+            <h2>5</h2>
+        </div>
+    </div>
+ 
+    <div class="bottom">
+        <div class="attendance box">
+            <h3>Attendance</h3>
+            <button class="check">Check-in now</button>
+            <p class="usb">USB/Bioprint</p>
+        </div>
+ 
+        <div class="analytics box">
+            <h3>Analytics</h3>
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Load sidebar.html -->
+    <script>
+        fetch("../html_components/sidebar.html")   // Correct path based on your folder
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("sidebar-container").innerHTML = data;
+
+
+                // ---------- APPLY ACTIVE CLASS HERE ----------
+            const menuLinks = document.querySelectorAll('.sidebar .menu li a');
+            let path = window.location.pathname.split("/").pop();
+
+            if (!path) path = "dashboard.html";
+
+            menuLinks.forEach(link => {
+                const linkHref = link.getAttribute('href').split("/").pop().trim();
+                link.classList.remove("active");
+
+                if (linkHref === path) {
+                    link.classList.add("active");
+                }
+            });
+                // Load sidebar.js after sidebar HTML
+                const script = document.createElement("script");
+                script.src = "../js_components/sidebar.js";  // Correct path
+                document.body.appendChild(script);
+            });
+    </script>
+
+    
+ 
+<script src="../js_components/dashboard.js"></script>
+</body>
+</html>

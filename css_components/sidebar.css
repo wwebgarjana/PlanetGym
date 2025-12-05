@@ -1,0 +1,105 @@
+body {
+font-family: Arial, sans-serif;
+    color: white;
+     margin: 0;        /* FIX: remove white space left */
+    padding: 0;   
+}
+.sidebar {
+    width: 180px;
+    background: #141821;
+    height: 120vh;
+    position: fixed;
+    padding: 10px;
+     top: 0; 
+}
+/* Sidebar active link */
+.sidebar .menu li a.active {
+    background: rgb(240, 133, 11);
+    color: white;
+    height: 40px;
+}
+
+
+ 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.logo h2 {
+    margin: 0;
+    font-size: 20px;
+    color: white;
+}
+ 
+.menu {
+    margin-top: 30px;
+    list-style: none;
+    padding: 0;
+}
+.menu li {
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #cfcfcf;
+    font-size: 15px;
+}
+.menu .active {
+    background: #ff7a1f;
+    color: white;
+}
+.back-btn i {
+    font-size: 28px;       /* arrow size */
+    color: orange;         /* orange color */
+    cursor: pointer;
+    transition: 0.3s;
+}
+.sidebar .logo .icon {
+    font-size: 40px;   /* Change size: 40px, 50px, 60px as you like */
+    display: inline-block;
+    margin-right: 0px; /* spacing between icon and text */
+}
+
+.back-btn i:hover {
+    color: #ff7b00;        /* darker orange on hover */
+}
+.menu li a{
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    
+}
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: 10px;
+}
+
+.menu li a {
+    display: flex;
+    align-items: center;
+   
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    gap: 8px; /* Space between icon and text */
+}
+
+/* ICON SIZE + ALIGNMENT */
+.menu li a i {
+    width: 25px;      /* FIXED WIDTH: All icons align vertically */
+    font-size: 18px;
+    text-align: center;
+}
+
+/* HOVER EFFECT */
+.menu li a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transition: 0.2s;
+}

@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    background: #0f1117;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+ 
+/* ---------- MAIN ---------- */
+.main {
+    margin-left: 220px;
+    padding: 20px;
+}
+ 
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ 
+.topbar input {
+    width: 350px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: #1e222b;
+    color: white;
+}
+ 
+.top-icons span {
+    font-size: 20px;
+    margin-left: 20px;
+}
+ 
+/* ---------- STATS ---------- */
+.stats {
+    margin-top: 50px;
+    display: flex;
+    gap: 20px;
+}
+ 
+.card {
+    background: #1a1f27;
+    padding: 20px;
+    width: 180px;
+    border-radius: 12px;
+}
+ 
+.card p {
+    color: #f8f2f2;
+    font-size: 20px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+ 
+.card h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #ff7a1f;
+}
+ 
+/* ---------- LOWER SECTION ---------- */
+.bottom {
+    margin-top: 50px;
+    display: flex;
+    gap: 25px;
+}
+ 
+.box {
+    background: #1a1f27;
+    padding: 20px;
+    border-radius: 12px;
+}
+ 
+.attendance {
+    width: 35%;
+    text-align: center;
+}
+ 
+.check {
+    background: #ff7a1f;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+ 
+.usb {
+    color: #aaa;
+    margin-top: 15px;
+    font-size: 13px;
+}
+ 
+.analytics {
+    width: 60%;
+}
+.sidebar .logo .icon {
+    font-size: 40px;   /* Change size: 40px, 50px, 60px as you like */
+    display: inline-block;
+    margin-right: 0px; /* spacing between icon and text */
+}
+.back-btn i {
+    font-size: 28px;       /* arrow size */
+    color: orange;         /* orange color */
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.back-btn i:hover {
+    color: #ff7b00;        /* darker orange on hover */
+}

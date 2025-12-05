@@ -1,0 +1,25 @@
+/* Reset defaults */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  background: #0f1117;
+    color: white;
+}
+
+/* Content area */
+.content {
+    margin-left: 300px; /* Width of the sidebar */
+    padding: 20px;
+}
+
+/* Example content styling */
+.content h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.content p {
+    font-size: 16px;
+    line-height: 1.5;
+}
