@@ -21,9 +21,65 @@
     <div id="sidebar-container"></div>
 
     <!-- Page Content -->
-    <div class="content">
-        <h1>Members</h1>
-        <p>Here you can display members list or other content.</p>
+    <div class="header">
+        <h2>Members</h2>
+        <button id="addMemberBtn">+ Add Member</button>
+    </div>
+ 
+    <div id="memberList" class="member-table">
+        <!-- Members list auto inserted here -->
+    </div>
+ 
+    <!-- Popup Modal -->
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+ 
+            <span id="closeModal" class="close">&times;</span>
+ 
+            <h3>Add Member</h3>
+ 
+            <div class="form-group">
+                <label>Upload Photo</label>
+                <input type="file" id="photo">
+            </div>
+ 
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="fullName">
+            </div>
+ 
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="email">
+            </div>
+
+            <div class="form-group">
+                <label>Mobile No</label>
+                <input type="tel" id="mobileNo">
+            </div>
+ 
+            <div class="form-group">
+                <label>Choose Plan</label>
+                <select id="plan">
+                    <option value="">Select Plan</option>
+                    <option value="1">1 Month</option>
+                    <option value="3">3 Months</option>
+                    <option value="6">6 Months</option>
+                </select>
+            </div>
+ 
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" id="startDate">
+            </div>
+ 
+            <div class="form-group">
+                <label>End Date</label>
+                <input type="date" id="endDate" readonly>
+            </div>
+ 
+            <button id="saveMember" class="save-btn">Save</button>
+        </div>
     </div>
 
     <!-- Load sidebar.html -->

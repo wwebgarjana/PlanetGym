@@ -1,33 +1,28 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-// Main IPC access (raw invoke)
-contextBridge.exposeInMainWorld("electron", {
-  ipcRenderer: {
-    invoke: (...args) => ipcRenderer.invoke(...args)
-  }
-});
-
-// Custom API functions for your app
 contextBridge.exposeInMainWorld("api", {
-  
-  // Save User
-  saveUser: (email, password, role) =>
-    ipcRenderer.invoke("save-user", { email, password, role }),
 
-  // Check Login
-  checkLogin: (email, password) =>
-    ipcRenderer.invoke("check-login", { email, password }),
+    saveUser: (email, password, role) =>
+        ipcRenderer.invoke("save-user", { email, password, role }),
 
-  // Save Plan
-  savePlan: (plan_type, months, price, facilities) =>
-    ipcRenderer.invoke("save-plan", {
-      plan_type,
-      months,
-      price,
-      facilities
-    }),
+    checkLogin: (email, password) =>
+        ipcRenderer.invoke("check-login", { email, password }),
 
-  // Get Plans
-  getPlans: () =>
-    ipcRenderer.invoke("get-plans")
+    savePlan: (plan_type, months, price, facilities) =>
+        ipcRenderer.invoke("save-plan", { plan_type, months, price, facilities }),
+
+    getPlans: () =>
+        ipcRenderer.invoke("get-plans"),
+
+    updatePlan: (data) =>
+        ipcRenderer.invoke("update-plan", data),
+
+    deletePlan: (id) =>
+        ipcRenderer.invoke("delete-plan", id),
+
+      saveMember: (member) =>
+        ipcRenderer.invoke("save-member", member),
+
+    getMembers: () =>
+        ipcRenderer.invoke("get-members")
 });

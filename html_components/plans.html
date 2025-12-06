@@ -5,31 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members</title>
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Sidebar CSS -->
     <link rel="stylesheet" href="../css_components/sidebar.css">
-
-    <!-- Members Page CSS -->
     <link rel="stylesheet" href="../css_components/plans.css">
-
 </head>
 <body>
 
-    <!-- Sidebar Container -->
     <div id="sidebar-container"></div>
 
-    <!-- Page Content -->
-     <div class="content">
+    <div class="content">
 
         <div class="plans-header">
             <h1>Membership Plans</h1>
             <button id="openFormBtn" class="add-plan-btn">Add Plan</button>
         </div>
 
-        <!-- Cards will be displayed here -->
-        <div id="plansContainer" class="plans-container"></div>
+        <div class="plans-scroll">
+            <div id="plansContainer" class="plans-container"></div>
+        </div>
 
     </div>
 
@@ -37,7 +30,10 @@
     <div id="popupForm" class="popup hidden">
         <div class="popup-box">
 
-            <h2>Add New Plan</h2>
+            <h2 id="formTitle">Add New Plan</h2>
+
+            <!-- DELETE BUTTON (DEFAULT HIDDEN) -->
+            <button id="deletePlanBtn" class="delete-btn hidden">Delete Plan</button>
 
             <label>Plan Type</label>
             <select id="planType">
@@ -66,36 +62,28 @@
         </div>
     </div>
 
-    <!-- Load sidebar.html -->
     <script>
-        fetch("../html_components/sidebar.html")   // Correct path based on your folder
+        fetch("../html_components/sidebar.html")
             .then(response => response.text())
             .then(data => {
                 document.getElementById("sidebar-container").innerHTML = data;
 
-   // ---------- APPLY ACTIVE CLASS HERE ----------
-            const menuLinks = document.querySelectorAll('.sidebar .menu li a');
-            let path = window.location.pathname.split("/").pop();
+                const menuLinks = document.querySelectorAll('.sidebar .menu li a');
+                let path = window.location.pathname.split("/").pop();
+                if (!path) path = "plans.html";
 
-            if (!path) path = "plans.html";
+                menuLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href').split("/").pop().trim();
+                    link.classList.remove("active");
+                    if (linkHref === path) link.classList.add("active");
+                });
 
-            menuLinks.forEach(link => {
-                const linkHref = link.getAttribute('href').split("/").pop().trim();
-                link.classList.remove("active");
-
-                if (linkHref === path) {
-                    link.classList.add("active");
-                }
-            });
-
-                // Load sidebar.js after sidebar HTML
                 const script = document.createElement("script");
-                script.src = "../js_components/sidebar.js";  // Correct path
+                script.src = "../js_components/sidebar.js";
                 document.body.appendChild(script);
             });
     </script>
 
-    <!-- Plans Page JS -->
     <script src="../js_components/plans.js"></script>
 
 </body>
