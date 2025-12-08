@@ -3,23 +3,150 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-   background: #0f1117;
+  background: #0f1117;
     color: white;
 }
 
 /* Content area */
-.content {
-    margin-left: 300px; /* Width of the sidebar */
+.header {
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+    margin-left: 300px;
+}
+ 
+#addTrainerBtn {
+    background: orange;
+    color:white;
+    padding:10px 10px;
+    height: 33px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+ 
+.trainer-table {
+    width: 60%;
+    margin: auto;
+    margin-top: 20px;
+    background: #f0eaea;
     padding: 20px;
+    border-radius: 12px;
+    margin-left: 300px;
 }
 
-/* Example content styling */
-.content h1 {
-    font-size: 28px;
-    margin-bottom: 15px;
+
+
+.trainer-row {
+    display: flex;
+    align-items: center;
+    padding: 0; 
+    margin: 0;  
+    margin-top: 20px;
+    color: black;
 }
 
-.content p {
-    font-size: 16px;
-    line-height: 1.5;
+
+/* Agar aap chahte hain columns evenly distribute ho */
+.trainer-row .col-trainer {
+      margin-left: 50px;
+      margin-right: 20px;
+      color: #000;
+      font-weight: bold;
+}
+.trainer-row .col-date {
+  margin-left: 17px;
+  color: #000;
+      font-weight: bold;
+   
+}
+.trainer-row .col-email {
+    color: #000;
+      font-weight: bold;
+     
+}
+.trainer-row .col-mobile {
+    color: #000;
+      font-weight: bold;
+     
+}
+
+.trainer-row .col-action {
+    color: #000;
+      font-weight: bold;
+     
+    
+}
+
+ 
+ 
+.trainer-row img {
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    margin-right:10px;
+}
+ 
+.status {
+   height: 20px;
+   padding: 5px;
+    border-radius: 6px;
+    font-size: 13px;
+    width: 60px;
+    text-align: center;
+}
+ 
+.expired { background: #e74c3c; }
+.pending { background: #f39c12; }
+
+ 
+/* Modal */
+.modal {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+}
+ 
+.modal-content {
+    background:#fff;
+    color:#000;
+    padding:25px;
+    width:380px;
+    border-radius:12px;
+}
+ 
+.close {
+    float:right;
+    font-size:22px;
+    cursor:pointer;
+}
+ 
+.form-group {
+    margin-bottom:15px;
+}
+ 
+input, select {
+    width:100%;
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+ 
+.save-btn {
+    width:100%;
+    padding:12px;
+    background:orange;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+    font-weight:bold;
 }

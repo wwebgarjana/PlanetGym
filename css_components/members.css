@@ -18,7 +18,8 @@ body {
 #addMemberBtn {
     background: orange;
     color:white;
-    padding:10px 20px;
+    padding:10px 10px;
+    height: 33px;
     border:none;
     border-radius:8px;
     cursor:pointer;
@@ -29,27 +30,55 @@ body {
     width: 60%;
     margin: auto;
     margin-top: 20px;
-    background: #0a0a0a;
+    background: #f0eaea;
     padding: 20px;
     border-radius: 12px;
     margin-left: 300px;
 }
- 
+
+
+
 .member-row {
-    display:flex;
-    justify-content:space-between;
-    padding:15px;
-    border-bottom:1px solid #333;
-    align-items:center;
+    display: flex;
+    align-items: center;
+    padding: 0; 
+    margin: 0;  
+    margin-top: 20px;
+    color: black;
+}
+
+
+/* Agar aap chahte hain columns evenly distribute ho */
+.member-row .col-member {
+      margin-left: 50px;
+      margin-right: 20px;
+      color: #000;
+      font-weight: bold;
+}
+.member-row .col-date {
+  margin-left: 30px;
+  color: #000;
+      font-weight: bold;
    
 }
-.member-row.header{
-     display:flex;
-   
-    padding:15px;
-    border-bottom:1px solid #333;
-    align-items:center;
+.member-row .col-enddate{
+    color: #000;
+      font-weight: bold;
+     
 }
+.member-row .col-status {
+     
+    color: #000;
+      font-weight: bold;
+}
+.member-row .col-action {
+    color: #000;
+      font-weight: bold;
+     
+    
+}
+
+ 
  
 .member-row img {
     width:45px;
@@ -59,13 +88,17 @@ body {
 }
  
 .status {
-    padding: 6px 12px;
+   height: 20px;
+   padding: 5px;
     border-radius: 6px;
     font-size: 13px;
+    width: 60px;
+    text-align: center;
 }
  
 .expired { background: #e74c3c; }
 .pending { background: #f39c12; }
+
  
 /* Modal */
 .modal {

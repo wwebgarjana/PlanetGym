@@ -1,118 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Members</title>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Sidebar CSS -->
-    <link rel="stylesheet" href="../css_components/sidebar.css">
-
-    <!-- Members Page CSS -->
-    <link rel="stylesheet" href="../css_components/members.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Members</title>
+ 
+  <!-- Font Awesome (fixed link) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+ 
+  <!-- Sidebar CSS -->
+  <link rel="stylesheet" href="../css_components/sidebar.css">
+ 
+  <!-- Members Page CSS -->
+  <link rel="stylesheet" href="../css_components/members.css">
 </head>
 <body>
-
-    <!-- Sidebar Container -->
-    <div id="sidebar-container"></div>
-
-    <!-- Page Content -->
-    <div class="header">
-        <h2>Members</h2>
-        <button id="addMemberBtn">+ Add Member</button>
+ 
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+ 
+  <!-- Page Content -->
+  <div class="header">
+    <h2>Members</h2>
+    <button id="addMemberBtn">+ Add Member</button>
+  </div>
+ 
+  <div id="memberList" class="member-table">
+    <!-- Members list auto inserted here -->
+  </div>
+ 
+  <!-- Popup Modal -->
+  <div id="memberModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+ 
+      <h3>Add Member</h3>
+ 
+      <div class="form-group">
+        <label>Upload Photo</label>
+        <input type="file" id="photo" accept="image/*">
+      </div>
+ 
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="fullName">
+      </div>
+ 
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email">
+      </div>
+ 
+      <div class="form-group">
+        <label>Mobile No</label>
+        <input type="tel" id="mobileNo">
+      </div>
+ 
+      <div class="form-group">
+        <label>Choose Plan</label>
+        <select id="plan">
+          <option value="">Select Plan</option>
+          <option value="1">1 Month</option>
+          <option value="3">3 Months</option>
+          <option value="6">6 Months</option>
+        </select>
+      </div>
+ 
+      <div class="form-group">
+        <label>Start Date</label>
+        <input type="date" id="startDate">
+      </div>
+ 
+      <div class="form-group">
+        <label>End Date</label>
+        <input type="date" id="endDate" readonly>
+      </div>
+ 
+      <button id="saveMember" class="save-btn">Save</button>
     </div>
+  </div>
  
-    <div id="memberList" class="member-table">
-        <!-- Members list auto inserted here -->
-    </div>
+  <!-- Load sidebar.html -->
+  <script>
+    fetch("../html_components/sidebar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("sidebar-container").innerHTML = data;
  
-    <!-- Popup Modal -->
-    <div id="memberModal" class="modal">
-        <div class="modal-content">
+        // ---------- APPLY ACTIVE CLASS HERE ----------
+        const menuLinks = document.querySelectorAll('.sidebar .menu li a');
+        let path = window.location.pathname.split("/").pop();
+        if (!path) path = "members.html";
  
-            <span id="closeModal" class="close">&times;</span>
+        menuLinks.forEach(link => {
+          const linkHref = link.getAttribute('href').split("/").pop().trim();
+          link.classList.remove("active");
+          if (linkHref === path) {
+            link.classList.add("active");
+          }
+        });
  
-            <h3>Add Member</h3>
+        // Load sidebar.js after sidebar HTML
+        const script = document.createElement("script");
+        script.src = "../js_components/sidebar.js";
+        document.body.appendChild(script);
+      })
+      .catch(err => console.error("Sidebar load failed:", err));
+  </script>
  
-            <div class="form-group">
-                <label>Upload Photo</label>
-                <input type="file" id="photo">
-            </div>
- 
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" id="fullName">
-            </div>
- 
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" id="email">
-            </div>
-
-            <div class="form-group">
-                <label>Mobile No</label>
-                <input type="tel" id="mobileNo">
-            </div>
- 
-            <div class="form-group">
-                <label>Choose Plan</label>
-                <select id="plan">
-                    <option value="">Select Plan</option>
-                    <option value="1">1 Month</option>
-                    <option value="3">3 Months</option>
-                    <option value="6">6 Months</option>
-                </select>
-            </div>
- 
-            <div class="form-group">
-                <label>Start Date</label>
-                <input type="date" id="startDate">
-            </div>
- 
-            <div class="form-group">
-                <label>End Date</label>
-                <input type="date" id="endDate" readonly>
-            </div>
- 
-            <button id="saveMember" class="save-btn">Save</button>
-        </div>
-    </div>
-
-    <!-- Load sidebar.html -->
-    <script>
-        fetch("../html_components/sidebar.html")   // Correct path based on your folder
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("sidebar-container").innerHTML = data;
-
-   // ---------- APPLY ACTIVE CLASS HERE ----------
-            const menuLinks = document.querySelectorAll('.sidebar .menu li a');
-            let path = window.location.pathname.split("/").pop();
-
-            if (!path) path = "members.html";
-
-            menuLinks.forEach(link => {
-                const linkHref = link.getAttribute('href').split("/").pop().trim();
-                link.classList.remove("active");
-
-                if (linkHref === path) {
-                    link.classList.add("active");
-                }
-            });
-
-                // Load sidebar.js after sidebar HTML
-                const script = document.createElement("script");
-                script.src = "../js_components/sidebar.js";  // Correct path
-                document.body.appendChild(script);
-            });
-    </script>
-
-    <!-- Members Page JS -->
-    <script src="../js_components/members.js"></script>
-
+  <!-- Members Page JS -->
+  <script src="../js_components/members.js"></script>
 </body>
 </html>

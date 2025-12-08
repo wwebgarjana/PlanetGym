@@ -20,9 +20,16 @@ contextBridge.exposeInMainWorld("api", {
     deletePlan: (id) =>
         ipcRenderer.invoke("delete-plan", id),
 
-      saveMember: (member) =>
-        ipcRenderer.invoke("save-member", member),
+    // Members
+  saveMember: (member) => ipcRenderer.invoke("save-member", member),
+  getMembers: () => ipcRenderer.invoke("get-members"),
+  deleteMember: (id) => ipcRenderer.invoke("delete-member", id),
+  updateMember: (data) => ipcRenderer.invoke("update-member", data),
 
-    getMembers: () =>
-        ipcRenderer.invoke("get-members")
+   // Trainers
+  saveTrainer: (trainer) => ipcRenderer.invoke("save-trainer", trainer),
+  getTrainers: () => ipcRenderer.invoke("get-trainers"),
+  deleteTrainer: (id) => ipcRenderer.invoke("delete-trainer", id),
+  updateTrainer: (data) => ipcRenderer.invoke("update-trainer", data)
+
 });

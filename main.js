@@ -95,6 +95,7 @@ ipcMain.handle("delete-plan", (event, id) => {
 
 // ✅ MEMBERS TABLE (UPDATED WITH MOBILE)
 // --------------------------------------
+// MEMBERS TABLE
 db.run(`
   CREATE TABLE IF NOT EXISTS members (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -109,16 +110,16 @@ db.run(`
 `);
 
 
-// --------------------------------------
-// ✅ SAVE MEMBER API
-// --------------------------------------
+// --------------------
+// IPC: Members (CRUD)
+// --------------------
 ipcMain.handle("save-member", (event, member) => {
   return new Promise(resolve => {
     db.run(
       `INSERT INTO members (photo, name, email, mobile, plan, startDate, endDate)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
-        member.photo,
+        member.photo || "",
         member.name,
         member.email,
         member.mobile,
@@ -126,22 +127,120 @@ ipcMain.handle("save-member", (event, member) => {
         member.startDate,
         member.endDate
       ],
+      (err) => resolve({ success: !err })
+    );
+  });
+});
+ 
+ipcMain.handle("update-member", (event, data) => {
+  return new Promise(resolve => {
+    db.run(
+      `UPDATE members
+       SET photo=?, name=?, email=?, mobile=?, plan=?, startDate=?, endDate=?
+       WHERE id=?`,
+      [
+        data.photo || "",
+        data.name,
+        data.email,
+        data.mobile,
+        data.plan,
+        data.startDate,
+        data.endDate,
+        data.id
+      ],
+      (err) => resolve({ success: !err })
+    );
+  });
+});
+ 
+ipcMain.handle("delete-member", (event, id) => {
+  return new Promise(resolve => {
+    db.run("DELETE FROM members WHERE id=?", [id], (err) => {
+      resolve({ success: !err });
+    });
+  });
+});
+ 
+ipcMain.handle("get-members", () => {
+  return new Promise(resolve => {
+    db.all("SELECT * FROM members ORDER BY id DESC", (err, rows) => {
+      resolve(rows || []);
+    });
+  });
+});
+
+
+// MEMBERS TABLE
+// TRAINERS TABLE
+db.run(`
+  CREATE TABLE IF NOT EXISTS trainers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    photo TEXT,
+    name TEXT,
+    email TEXT,
+    mobile TEXT,
+    startDate TEXT
+  )
+`);
+
+
+// --------------------
+// IPC: Trainers (CRUD)
+// --------------------
+ipcMain.handle("save-trainer", (event, trainer) => {
+  return new Promise(resolve => {
+    db.run(
+      `INSERT INTO trainers (photo, name, email, mobile, startDate)
+       VALUES (?, ?, ?, ?, ?)`,
+      [
+        trainer.photo || "",
+        trainer.name,
+        trainer.email,
+        trainer.mobile,
+        trainer.startDate
+      ],
       err => resolve({ success: !err })
     );
   });
 });
 
-// --------------------------------------
-// ✅ GET ALL MEMBERS API
-// --------------------------------------
-ipcMain.handle("get-members", () => {
+ 
+ipcMain.handle("update-trainer", (event, data) => {
   return new Promise(resolve => {
-    db.all(
-      "SELECT * FROM members ORDER BY id DESC",
-      (err, rows) => resolve(rows || [])
+    db.run(
+      `UPDATE trainers
+       SET photo=?, name=?, email=?, mobile=?, startDate=?
+       WHERE id=?`,
+      [
+        data.photo || "",
+        data.name,
+        data.email,
+        data.mobile,
+        data.startDate,
+        data.id
+      ],
+      err => resolve({ success: !err })
     );
   });
 });
+
+ 
+ipcMain.handle("delete-trainer", (event, id) => {
+  return new Promise(resolve => {
+    db.run("DELETE FROM trainers WHERE id=?", [id], err => resolve({ success: !err }));
+  });
+});
+
+ 
+ipcMain.handle("get-trainers", () => {
+  return new Promise(resolve => {
+    db.all("SELECT * FROM trainers ORDER BY id DESC", (err, rows) => {
+      resolve(rows || []);
+    });
+  });
+});
+
+
 
 
 // WINDOW
