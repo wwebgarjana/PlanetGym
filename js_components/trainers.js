@@ -88,7 +88,7 @@ async function loadTrainers() {
     <div class="trainer-row header">
       <div class="col-trainer" style="margin-left:25px;">Trainer</div>
       <div class="col-date">Joining Date</div>
-      <div class="col-email">Email</div>
+    
       <div class="col-mobile">Mobile</div>
       <div class="col-action">Action</div>
     </div>
@@ -106,12 +106,12 @@ async function loadTrainers() {
         
         <div style="display:flex;align-items:center;gap:10px;">
           <img src="${avatar}" style="border-radius:50%;width:45px;height:45px;object-fit:cover;">
-          <div>${t.name}</div>
+          <div class="trainer-name">${t.name}</div>
         </div>
 
-        <div>${t.startDate}</div>
-        <div>${t.email}</div>
-        <div>${t.mobile}</div>
+        <div class="trainer-date">${t.startDate}</div>
+        
+        <div class="trainer-mobile">${t.mobile}</div>
 
         <div style="display:flex;gap:15px;font-size:18px;">
           <i class="fa-solid fa-pen-to-square update-btn" data-id="${t.id}" style="color:orange;cursor:pointer;"></i>
@@ -145,6 +145,11 @@ document.addEventListener("click", async (e) => {
     document.getElementById("email").value = t.email;
     document.getElementById("mobileNo").value = t.mobile;
     document.getElementById("startDate").value = t.startDate;
+
+     const preview = document.getElementById("photoPreview");
+    preview.src = t.photo ? t.photo : "";
+
+    
 
     photoInput.value = "";
 

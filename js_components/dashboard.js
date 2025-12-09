@@ -1,23 +1,22 @@
-const ctx = document.getElementById("chart").getContext("2d");
- 
-new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [{
-            label: "",
-            data: [120, 260, 210, 340, 300, 480],
-            borderColor: "#ff7a1f",
-            borderWidth: 3,
-            fill: false,
-            tension: 0.4
-        }]
-    },
-    options: {
-        plugins: { legend: { display: false } },
-        scales: {
-            y: { ticks: { color: "white" }, grid: { color: "#222" }},
-            x: { ticks: { color: "white" }, grid: { color: "#222" }}
-        }
-    }
+document.addEventListener("DOMContentLoaded", async () => {
+    
+    const totalMembersBox = document.querySelectorAll(".card h2")[0];
+    const activeTodayBox  = document.querySelectorAll(".card h2")[1];
+    const revenueBox      = document.querySelectorAll(".card h2")[2];
+    const totalTrainersBox= document.querySelectorAll(".card h2")[3];
+
+    // FETCH FROM DB (IPC)
+    const members = await window.api.countMembers();
+    const trainers = await window.api.countTrainers();
+    const revenue = await window.api.totalRevenue();
+    const active=await window.api.countActiveToday();
+
+    // SET DASHBOARD VALUES
+    totalMembersBox.innerText = members;
+    totalTrainersBox.innerText = trainers;
+    revenueBox.innerText = `₹${revenue}`;
+    activeTodayBox.innerText = active;
+
+    
+    
 });

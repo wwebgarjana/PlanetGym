@@ -30,6 +30,11 @@ contextBridge.exposeInMainWorld("api", {
   saveTrainer: (trainer) => ipcRenderer.invoke("save-trainer", trainer),
   getTrainers: () => ipcRenderer.invoke("get-trainers"),
   deleteTrainer: (id) => ipcRenderer.invoke("delete-trainer", id),
-  updateTrainer: (data) => ipcRenderer.invoke("update-trainer", data)
+  updateTrainer: (data) => ipcRenderer.invoke("update-trainer", data),
+
+   countMembers: () => ipcRenderer.invoke("count-members"),
+    countTrainers: () => ipcRenderer.invoke("count-trainers"),
+    totalRevenue: () => ipcRenderer.invoke("total-revenue"),
+    countActiveToday: () => ipcRenderer.invoke("active-members"),
 
 });

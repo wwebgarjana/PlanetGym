@@ -150,3 +150,26 @@ input, select {
     cursor:pointer;
     font-weight:bold;
 }
+.trainer-row .trainer-name {
+    max-width: 80px;    
+    word-wrap: break-word;
+    white-space: normal;
+           
+    min-width: 80px;   
+   
+}
+.trainer-row .trainer-date {
+    max-width: 100px;    
+    word-wrap: break-word;
+    white-space: normal;
+           
+    min-width: 100px;   
+   
+}
+
+.trainer-row .trainer-mobile {
+    max-width: 90px;     /* jitna area aap chaho */
+    word-wrap: break-word;
+    white-space: normal;
+    min-width: 70px;
+}

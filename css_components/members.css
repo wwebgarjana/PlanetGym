@@ -149,3 +149,9 @@ input, select {
     cursor:pointer;
     font-weight:bold;
 }
+/* Member name wrap fix */
+.member-row .member-name {
+    max-width: 80px;     /* jitna area aap chaho */
+    word-wrap: break-word;
+    white-space: normal;
+}

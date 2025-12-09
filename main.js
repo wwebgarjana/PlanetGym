@@ -240,7 +240,46 @@ ipcMain.handle("get-trainers", () => {
   });
 });
 
+// COUNT MEMBERS
+ipcMain.handle("count-members", () => {
+  return new Promise(resolve => {
+    db.get("SELECT COUNT(*) AS total FROM members", (err, row) => {
+      resolve(row?.total || 0);
+    });
+  });
+});
 
+// COUNT TRAINERS
+ipcMain.handle("count-trainers", () => {
+  return new Promise(resolve => {
+    db.get("SELECT COUNT(*) AS total FROM trainers", (err, row) => {
+      resolve(row?.total || 0);
+    });
+  });
+});
+
+// TOTAL REVENUE (SUM of prices from plans & members)
+ipcMain.handle("total-revenue", () => {
+  return new Promise(resolve => {
+    const query = `
+      SELECT SUM(p.price) AS total
+      FROM members m
+      JOIN plans p ON p.months = m.plan
+    `;
+
+    db.get(query, (err, row) => {
+      resolve(row?.total || 0);
+    });
+  });
+});
+
+ipcMain.handle("active-members", () => {
+  return new Promise(resolve => {
+    db.get("SELECT COUNT(*) AS total FROM members where status='active'", (err, row) => {
+      resolve(row?.total || 0);
+    });
+  });
+});
 
 
 // WINDOW

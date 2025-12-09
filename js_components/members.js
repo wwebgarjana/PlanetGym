@@ -1,202 +1,3 @@
-// let membersData = [];  // store all members data
-
-// const addBtn = document.getElementById("addMemberBtn");
-// const modal = document.getElementById("memberModal");
-// const closeModal = document.getElementById("closeModal");
-
-// // OPEN MODAL
-// addBtn.onclick = () => {
-//     modal.style.display = "flex";
-// };
-
-// // CLOSE MODAL
-// closeModal.onclick = () => {
-//     modal.style.display = "none";
-//     modal.removeAttribute("data-edit-id");
-//     document.getElementById("saveMember").innerText = "Save";
-// };
-
-
-
-// // -----------------------------
-// // LOAD DROPDOWN PLANS
-// // -----------------------------
-// async function loadPlansDropdown() {
-//     let planSelect = document.getElementById("plan");
-//     planSelect.innerHTML = `<option value="">Select Plan</option>`;
-
-//     let plans = await window.api.getPlans();
-
-//     plans.forEach(p => {
-//         planSelect.innerHTML += `
-//             <option value="${p.months}" data-price="${p.price}">
-//                 ${p.plan_type} (${p.months} Months)
-//             </option>
-//         `;
-//     });
-// }
-// loadPlansDropdown();
-
-
-// // -----------------------------
-// // AUTO END DATE
-// // -----------------------------
-// function updateEndDate() {
-//     let months = parseInt(document.getElementById("plan").value);
-//     let start = document.getElementById("startDate").value;
-
-//     if (!start || !months) return;
-
-//     let sDate = new Date(start);
-//     sDate.setMonth(sDate.getMonth() + months);
-
-//     document.getElementById("endDate").value =
-//         sDate.toISOString().split("T")[0];
-// }
-
-// document.getElementById("plan").addEventListener("change", updateEndDate);
-// document.getElementById("startDate").addEventListener("change", updateEndDate);
-
-
-
-// // -----------------------------
-// // SAVE / UPDATE MEMBER
-// // -----------------------------
-// document.getElementById("saveMember").addEventListener("click", async () => {
-
-//     let editId = modal.getAttribute("data-edit-id");
-
-//     let member = {
-//     id: editId,
-//     photo: document.getElementById("photo").value || "",
-//     name: document.getElementById("fullName").value,
-//     email: document.getElementById("email").value,
-//     mobile: document.getElementById("mobileNo").value,
-//     plan: document.getElementById("plan").value,
-//     startDate: document.getElementById("startDate").value,
-//     endDate: document.getElementById("endDate").value
-// };
-
-
-//     // UPDATE
-//     if (editId) {
-//         let result = await window.api.updateMember(member);
-
-//         if (result.success) {
-//             modal.style.display = "none";
-//             modal.removeAttribute("data-edit-id");
-//             document.getElementById("saveMember").innerText = "Save";
-//             await loadMembers();
-//         }
-//         return;
-//     }
-
-//     // SAVE NEW
-//     let result = await window.api.saveMember(member);
-//     if (result.success) {
-//         modal.style.display = "none";
-//         await loadMembers();
-//     }
-// });
-
-
-
-// // -----------------------------
-// // LOAD MEMBERS
-// // -----------------------------
-// async function loadMembers() {
-//     let container = document.getElementById("memberList");
-//     container.innerHTML = "";
-
-//     container.innerHTML += `
-//         <div class="member-row header">
-//             <div class="col-member" style="margin-left: 25px;">Member</div>
-//             <div class="col-date">Start Date</div>
-//             <div class="col-date">End Date</div>
-//             <div class="col-status">Status</div>
-//             <div class="col-status">Action</div>
-//         </div>
-//     `;
-
-//     membersData = await window.api.getMembers();
-
-//     membersData.forEach((m, i) => {
-//         container.innerHTML += `
-//             <div class="member-row" 
-//                 style="display:flex;align-items:center;justify-content:space-between;
-//                 border-bottom:1px solid #ccc;">
-
-//                 <div style="display:flex;align-items:center;">
-//                     <img src="https://i.pravatar.cc/50?img=${i+1}" 
-//                         style="border-radius:50%; width:45px; height:45px;">
-//                     <div>
-//                         <div>${m.name}</div>
-//                         <small>${m.plan} Month Plan</small>
-//                     </div>
-//                 </div>
-
-//                 <div>${m.startDate}</div>
-//                 <div>${m.endDate}</div>
-
-//                 <div class="status pending">Pending</div>
-
-//                 <div style="display:flex; gap:15px; font-size:18px; cursor:pointer;">
-//                     <i class="fa-solid fa-pen-to-square update-btn" data-id="${m.id}" style="color:#0d6efd;"></i>
-//                     <i class="fa-solid fa-trash delete-btn" data-id="${m.id}" style="color:red;"></i>
-//                 </div>
-
-//             </div>
-//         `;
-//     });
-// }
-
-
-
-// // -----------------------------
-// // CLICK HANDLER (FIXED — OUTSIDE)
-// // -----------------------------
-// document.addEventListener("click", async (e) => {
-
-//     // DELETE
-//     if (e.target.classList.contains("delete-btn")) {
-//         let id = e.target.getAttribute("data-id");
-
-//         if (confirm("Are you sure you want to delete this member?")) {
-//             let result = await window.api.deleteMember(id);
-//             if (result.success) {
-//                 await loadMembers();
-//             }
-//         }
-//     }
-
-//     // UPDATE
-//     if (e.target.classList.contains("update-btn")) {
-//         let id = e.target.getAttribute("data-id");
-
-//         // READ FROM stored data
-//         let data = membersData.find(x => x.id == id);
-
-//         if (data) {
-//             modal.style.display = "flex";
-
-//             document.getElementById("fullName").value = data.name;
-//             document.getElementById("email").value = data.email;
-//             document.getElementById("mobileNo").value = data.mobile;
-//             document.getElementById("plan").value = data.plan;
-//             document.getElementById("startDate").value = data.startDate;
-//             document.getElementById("endDate").value = data.endDate;
-
-//             modal.setAttribute("data-edit-id", id);
-//             document.getElementById("saveMember").innerText = "Update Member";
-//         }
-//     }
-// });
-
-
-
-// // INITIAL LOAD
-// loadMembers();
-
 
 
 
@@ -224,7 +25,8 @@ closeModal.onclick = () => {
  
 // Close modal when clicking outside content
 window.addEventListener("click", (e) => {
-  if (e.target === modal) {
+  if (e.target.classList.contains("modal"))
+ {
     modal.style.display = "none";
     modal.removeAttribute("data-edit-id");
     saveBtn.innerText = "Save";
@@ -313,7 +115,11 @@ saveBtn.addEventListener("click", async () => {
  
   // basic validation
   if (!member.name) return alert("Enter full name");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   if (!member.email) return alert("Enter email");
+if (!emailRegex.test(member.email)) return alert("Enter valid email");
+
   if (!member.plan) return alert("Choose plan");
   if (!member.startDate) return alert("Choose start date");
  
@@ -380,10 +186,11 @@ async function loadMembers() {
              style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ccc;padding:10px 0;">
           <div style="display:flex;align-items:center;gap:10px;">
             <img src="${avatar}" style="border-radius:50%; width:45px; height:45px; object-fit:cover;">
-            <div>
-              <div>${escapeHtml(m.name || "")}</div>
-              <small>${m.plan} Month Plan</small>
-            </div>
+            <div class="member-name">
+  <div>${escapeHtml(m.name || "")}</div>
+  <small>${m.plan} Month Plan</small>
+</div>
+
           </div>
  
           <div>${m.startDate || ""}</div>
@@ -463,6 +270,8 @@ document.addEventListener("click", async (e) => {
     document.getElementById("endDate").value = data.endDate || "";
  
     // clear file input (user can choose new image)
+    const preview = document.getElementById("photoPreview");
+    preview.src = data.photo ? data.photo : "";
     photoInput.value = "";
  
     modal.setAttribute("data-edit-id", id);
