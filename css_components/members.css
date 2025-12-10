@@ -7,12 +7,21 @@ body {
     color: white;
 }
 
+/* Wrapper to place member table and expiring widget side-by-side */
+.main-wrapper {
+    display: flex;
+    gap: 0px;
+    
+   
+}
+
+
 /* Content area */
 .header {
     display:flex;
     justify-content:space-between;
     padding:20px;
-    margin-left: 300px;
+   
 }
  
 #addMemberBtn {
@@ -27,59 +36,52 @@ body {
 }
  
 .member-table {
-    width: 60%;
+    width: 80%;
     margin: auto;
     margin-top: 20px;
     background: #f0eaea;
     padding: 20px;
     border-radius: 12px;
-    margin-left: 300px;
-}
-
-
-
-.member-row {
-    display: flex;
-    align-items: center;
-    padding: 0; 
-    margin: 0;  
-    margin-top: 20px;
-    color: black;
-}
-
-
-/* Agar aap chahte hain columns evenly distribute ho */
-.member-row .col-member {
-      margin-left: 50px;
-      margin-right: 20px;
-      color: #000;
-      font-weight: bold;
-}
-.member-row .col-date {
-  margin-left: 30px;
-  color: #000;
-      font-weight: bold;
-   
-}
-.member-row .col-enddate{
-    color: #000;
-      font-weight: bold;
-     
-}
-.member-row .col-status {
-     
-    color: #000;
-      font-weight: bold;
-}
-.member-row .col-action {
-    color: #000;
-      font-weight: bold;
-     
+    margin-left: 220px;
     
 }
 
+
+.member-row {
+    display: grid;
+    grid-template-columns: 180px 120px 120px 120px 60px;
+    align-items: center;
+    padding: 6px 0;
+    margin: 0;
+    margin-top: 12px;
+    color: black;
+}
+
+.member-row.header {
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 180px 120px 120px 120px 60px;
+}
+.member-name {
+    max-width: 140px; 
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 18px;
+}
+.col-member {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.col-status {
+    width: 80px;
+}
+
+
+
+
  
- 
+
 .member-row img {
     width:45px;
     height:45px;
@@ -154,4 +156,95 @@ input, select {
     max-width: 80px;     /* jitna area aap chaho */
     word-wrap: break-word;
     white-space: normal;
+}
+
+/* Keep these classnames unique to avoid collisions */
+.expiring-widget {
+  width: 350px;              /* adjust as needed */
+  max-height: 560px;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  color: #fff;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  margin-left: 10px;
+}
+ 
+/* Title */
+.widget-title {
+  margin: 4px 0 18px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f6f6f8;
+  letter-spacing: -0.2px;
+}
+ 
+/* Scrollable list */
+.expiring-list {
+  overflow-y: auto;
+  max-height: 460px;
+  padding-right: 6px; /* room for custom scrollbar */
+}
+ 
+/* Each item */
+.expiring-item {
+  display: flex;
+  flex-direction: column; /* stack name/days above button like image */
+  gap: 10px;
+  padding: 14px 10px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.01);
+}
+ 
+/* Info (name + days) */
+.item-info {
+  display: block;
+}
+.item-info .name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+.item-info .days {
+  font-size: 15px;
+  color: #d6d6d8;
+  margin-top: 6px;
+}
+ 
+/* Button style */
+.sms-btn {
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 50;
+  cursor: pointer;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.25);
+  transition: transform .08s ease, background .12s ease;
+}
+.sms-btn:active { transform: translateY(1px); }
+.sms-btn:hover { background: rgba(255,255,255,0.09); }
+ 
+/* Custom scrollbar (WebKit) */
+.expiring-list::-webkit-scrollbar { width: 8px; }
+.expiring-list::-webkit-scrollbar-track { background: transparent; }
+.expiring-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.06);
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+ 
+/* Responsive tweak */
+@media (max-width: 420px) {
+  .expiring-widget { width: 100%; padding: 16px; }
+  .widget-title { font-size: 22px; }
+  .item-info .name { font-size: 18px; }
+  .item-info .days { font-size: 16px; }
+  .sms-btn { font-size: 16px; padding: 10px; }
 }

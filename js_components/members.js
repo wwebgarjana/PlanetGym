@@ -1,6 +1,3 @@
-
-
-
 // members.js (frontend)
 let membersData = [];  // store loaded members
  
@@ -102,26 +99,46 @@ saveBtn.addEventListener("click", async () => {
   const photoBase64 = await readImageAsBase64(file).catch(() => "");
  
   const member = {
-    // if editId exists, pass id for update; for new create leave id null
     id: editId,
-    photo: photoBase64 || "",               // base64 string (can be empty)
+    photo: photoBase64 || "",
     name: document.getElementById("fullName").value.trim(),
     email: document.getElementById("email").value.trim(),
     mobile: document.getElementById("mobileNo").value.trim(),
     plan: document.getElementById("plan").value,
     startDate: document.getElementById("startDate").value,
-    endDate: document.getElementById("endDate").value
-  };
- 
-  // basic validation
-  if (!member.name) return alert("Enter full name");
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    endDate: document.getElementById("endDate").value,
+   // status: calculateStatus(document.getElementById("startDate").value, document.getElementById("endDate").value)
+    
+};
 
-  if (!member.email) return alert("Enter email");
+// BASIC VALIDATION
+if (!member.name) return alert("Enter full name");
+
+// NAME → Only alphabets + spaces
+if (!/^[A-Za-z ]+$/.test(member.name)) {
+    return alert("Name must contain only alphabets.");
+}
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!member.email) return alert("Enter email");
 if (!emailRegex.test(member.email)) return alert("Enter valid email");
 
-  if (!member.plan) return alert("Choose plan");
-  if (!member.startDate) return alert("Choose start date");
+// MOBILE VALIDATION
+if (!member.mobile) return alert("Enter mobile number");
+
+// Only digits allowed
+if (!/^[0-9]+$/.test(member.mobile)) {
+    return alert("Mobile number must contain only digits.");
+}
+
+// Correct length = 10 digits
+if (member.mobile.length !== 10) {
+    return alert("Mobile number must be exactly 10 digits.");
+}
+
+if (!member.plan) return alert("Choose plan");
+if (!member.startDate) return alert("Choose start date");
+
  
   try {
     if (editId) {
@@ -163,11 +180,11 @@ async function loadMembers() {
   // header row
   container.innerHTML += `
     <div class="member-row header">
-      <div class="col-member" style="margin-left: 25px;">Member</div>
-      <div class="col-date">Start Date</div>
-      <div class="col-enddate">End Date</div>
-      <div class="col-status">Status</div>
-      <div class="col-action">Action</div>
+      <div class="col-memberr" style="margin-left: 25px;">Member</div>
+      <div class="col-datee">Start Date</div>
+      <div class="col-enddatee">End Date</div>
+      <div class="col-statuss">Status</div>
+      <div class="col-actionn">Action</div>
     </div>
   `;
  
@@ -182,43 +199,64 @@ async function loadMembers() {
         : `https://i.pravatar.cc/50?img=${(i % 70) + 1}`;
  
       container.innerHTML += `
-        <div class="member-row"
-             style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ccc;padding:10px 0;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <img src="${avatar}" style="border-radius:50%; width:45px; height:45px; object-fit:cover;">
-            <div class="member-name">
-  <div>${escapeHtml(m.name || "")}</div>
-  <small>${m.plan} Month Plan</small>
-</div>
-
-          </div>
+    <div class="member-row">
  
-          <div>${m.startDate || ""}</div>
-          <div>${m.endDate || ""}</div>
-          <div class="status ${getStatusClass(m.endDate)}">${getStatusText(m.endDate)}</div>
- 
-          <div style="display:flex; gap:15px; font-size:18px; cursor:pointer;">
-            <i class="fa-solid fa-pen-to-square update-btn" data-id="${m.id}" title="Edit" style="color:orange;"></i>
-            <i class="fa-solid fa-trash delete-btn" data-id="${m.id}" title="Delete" style="color:orange;"></i>
-          </div>
+        <div class="col-member">
+            <img src="${avatar}"
+                 style="border-radius:50%; width:45px; height:45px; object-fit:cover;">
+            <div>
+                <div class="member-name">${escapeHtml(m.name || "")}</div>
+                <small>${m.plan} Month Plan</small>
+            </div>
         </div>
-      `;
+ 
+        <div class="col-date">${m.startDate || ""}</div>
+        <div class="col-enddate">${m.endDate || ""}</div>
+ 
+        <div class="col-status ${getStatusClass(m.endDate)}">
+            ${getStatusText(m.endDate)}
+        </div>
+       
+ 
+        <div class="col-action">
+            <i class="fa-solid fa-pen-to-square update-btn"
+               data-id="${m.id}" style="color:orange;"></i>
+            <i class="fa-solid fa-trash delete-btn"
+               data-id="${m.id}" style="color:orange;"></i>
+        </div>
+ 
+    </div>
+`;
     });
+     loadExpiringWidget();
   } catch (err) {
     console.error("Failed to load members:", err);
   }
 }
  
-// small helpers for status
+
+
 function getStatusText(endDate) {
   if (!endDate) return "Pending";
-  const today = new Date().toISOString().split("T")[0];
-  return endDate >= today ? "Active" : "Expired";
+
+  const today = new Date();
+  const end = new Date(endDate);
+
+  // Difference in days
+  const diffTime = end - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 0) return "Expired";        // Date chali gayi
+  if (diffDays <= 5) return "Expiring Soon"; // Last 5 days
+  return "Active";
 }
+
 function getStatusClass(endDate) {
-  const t = getStatusText(endDate);
-  if (t === "Active") return "active";
-  if (t === "Expired") return "expired";
+  const status = getStatusText(endDate);
+
+  if (status === "Active") return "active";
+  if (status === "Expired") return "expired";
+  if (status === "Expiring Soon") return "expiring-soon";
   return "pending";
 }
  
@@ -291,4 +329,121 @@ function clearModalFields() {
 }
  
 // INITIAL LOAD
+//window.api.refreshStatus();
 loadMembers();
+
+// -----------------------------
+// SMS Sending Utility
+// -----------------------------
+async function sendSms(mobileNumber, message) {
+  try {
+    const response = await fetch("https://www.fast2sms.com/dev/bulkV2", {
+      method: "POST",
+      headers: {
+        "authorization": "yue8b4madwJQlx2qjDPtrkLIOVv0in6XM1HgUcKpAoWZSTER7CuUqhQW6kB2ye4pb8nKFrRPHNzd7mEY", // API key डालो
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        route: "v3",             // modern route
+        sender_id: "TXTIND",     // approved sender ID
+        message: message,
+        language: "english",
+        flash: 0,
+        numbers: mobileNumber
+      })
+    });
+
+    const res = await response.json();
+    console.log("SMS API Response:", res);
+
+    // Fast2SMS में success key true/false में return हो सकती है
+    return res.return || res.success || false;
+  } catch (err) {
+    console.error("SMS Error:", err);
+    return false;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const list = document.getElementById('expiringList');
+  if (!list) return;
+
+  list.addEventListener('click', async function (e) {
+  const btn = e.target.closest('.sms-btn');
+  if (!btn) return;
+
+  const name = btn.dataset.name || 'User';
+  const member = membersData.find(m => m.name === name);
+
+  if (!member || !member.mobile) {
+    return showTemporaryToast("Mobile number not found");
+  }
+
+  const mobileNumber = member.mobile.trim();
+  const message = `Hi ${name}, your plan is expiring soon.`;
+
+  const success = await sendSms(mobileNumber, message);  // ✅ call new function
+  if (success) {
+    showTemporaryToast(`SMS sent to ${name}`);
+  } else {
+    showTemporaryToast("SMS sending failed");
+  }
+});
+
+   // simple toast
+  function showTemporaryToast(text) {
+    const t = document.createElement('div');
+    t.textContent = text;
+    Object.assign(t.style, {
+      position: 'fixed',
+      right: '18px',
+      bottom: '18px',
+      background: 'rgba(0,0,0,0.7)',
+      color: '#fff',
+      padding: '10px 14px',
+      borderRadius: '8px',
+      zIndex: 9999,
+      fontSize: '14px'
+    });
+    document.body.appendChild(t);
+    setTimeout(()=> t.style.opacity = '0', 2000);
+    setTimeout(()=> t.remove(), 2600);
+  }
+});
+
+
+function getRemainingDays(endDate) {
+    const today = new Date();
+    const end = new Date(endDate);
+
+    const diffTime = end - today;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+}
+
+async function loadExpiringWidget() {
+    const list = document.getElementById("expiringList");
+    list.innerHTML = ""; // Clear old content
+
+    if (!membersData.length) return;
+
+    membersData.forEach(m => {
+        const status = getStatusText(m.endDate);
+
+        if (status === "Expiring Soon") {
+            const days = getRemainingDays(m.endDate);
+
+            list.innerHTML += `
+                <div class="expiring-item">
+                    <div class="item-info">
+                        <div class="name">${escapeHtml(m.name)}</div>
+                        <div class="days">${days} days</div>
+                    </div>
+                    <button class="sms-btn" data-name="${escapeHtml(m.name)}">Send SMS</button>
+                </div>
+            `;
+        }
+    });
+}
+loadExpiringWidget();
+
+

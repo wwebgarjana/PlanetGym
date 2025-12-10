@@ -25,6 +25,7 @@
     <button id="addMemberBtn">+ Add Member</button>
   </div>
  
+  <div class="main-wrapper">
   <div id="memberList" class="member-table">
     <!-- Members list auto inserted here -->
   </div>
@@ -51,10 +52,11 @@
         <input type="email" id="email">
       </div>
  
-      <div class="form-group">
-        <label>Mobile No</label>
-        <input type="tel" id="mobileNo">
-      </div>
+     <div class="form-group">
+    <label>Mobile No</label>
+    <input type="tel" id="mobileNo" maxlength="10" pattern="\d{10}">
+</div>
+
  
       <div class="form-group">
         <label>Choose Plan</label>
@@ -75,10 +77,47 @@
         <label>End Date</label>
         <input type="date" id="endDate" readonly>
       </div>
+
+       
  
       <button id="saveMember" class="save-btn">Save</button>
     </div>
   </div>
+
+
+  <!-- Expiring items widget (fragment) -->
+<section class="expiring-widget">
+  <h2 class="widget-title">Expiring Soon</h2>
+ 
+  <div class="expiring-list" id="expiringList">
+    <div class="expiring-item">
+      <div class="item-info">
+        <div class="name">John Doe</div>
+        <div class="days">3 days</div>
+      </div>
+      <button class="sms-btn" data-name="John Doe">Send SMS</button>
+    </div>
+ 
+    <div class="expiring-item">
+      <div class="item-info">
+        <div class="name">Jane Smith</div>
+        <div class="days">3 days</div>
+      </div>
+      <button class="sms-btn" data-name="Jane Smith">Send SMS</button>
+    </div>
+ 
+    <div class="expiring-item">
+      <div class="item-info">
+        <div class="name">Michael Johnson</div>
+        <div class="days">5 days</div>
+      </div>
+      <button class="sms-btn" data-name="Michael Johnson">Send SMS</button>
+    </div>
+ 
+    
+  </div>
+</section>
+</div>
  
   <!-- Load sidebar.html -->
   <script>

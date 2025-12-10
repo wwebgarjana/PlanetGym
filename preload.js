@@ -36,5 +36,6 @@ contextBridge.exposeInMainWorld("api", {
     countTrainers: () => ipcRenderer.invoke("count-trainers"),
     totalRevenue: () => ipcRenderer.invoke("total-revenue"),
     countActiveToday: () => ipcRenderer.invoke("active-members"),
+   // refreshStatus: () => ipcRenderer.invoke("refresh-status")
 
 });

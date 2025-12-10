@@ -106,6 +106,7 @@ db.run(`
     plan TEXT,
     startDate TEXT,
     endDate TEXT
+    
   )
 `);
 
@@ -280,6 +281,11 @@ ipcMain.handle("active-members", () => {
     });
   });
 });
+// ADD STATUS COLUMN IF NOT EXISTS
+
+
+
+
 
 
 // WINDOW
