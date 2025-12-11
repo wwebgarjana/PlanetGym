@@ -45,6 +45,23 @@ ipcMain.handle("check-login", (event, user) => {
   });
 });
 
+
+ipcMain.handle("get-user-email", () => {
+  return new Promise(resolve => {
+    db.get("SELECT email FROM users LIMIT 1", (err, row) => {
+      resolve(row?.email || null);
+    });
+  });
+});
+
+
+// Logout user
+ipcMain.handle("logout", () => {
+    currentUser = null;
+    return true;
+});
+
+
 // PLANS TABLE
 db.run(`
   CREATE TABLE IF NOT EXISTS plans (
@@ -281,8 +298,81 @@ ipcMain.handle("active-members", () => {
     });
   });
 });
-// ADD STATUS COLUMN IF NOT EXISTS
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS attendance (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER,
+    date TEXT,
+    in_time TEXT,
+    out_time TEXT
+  )
+`);
+ipcMain.handle("check-today-attendance", (event, id, date) => {
+  return new Promise(resolve => {
+    db.get(
+      "SELECT * FROM attendance WHERE member_id=? AND date=?",
+      [id, date],
+      (err, row) => {
+        resolve({
+          completed: row?.in_time && row?.out_time ? true : false,
+          inDone: row?.in_time ? true : false,
+          outDone: row?.out_time ? true : false
+        });
+      }
+    );
+  });
+});
+
+ipcMain.handle("mark-in", (event, id) => {
+  const date = new Date().toISOString().split("T")[0];
+  const time = new Date().toLocaleTimeString();
+
+  return new Promise(resolve => {
+    db.run(
+      `INSERT INTO attendance (member_id, date, in_time)
+       VALUES (?, ?, ?)`,
+      [id, date, time],
+      err => resolve({ success: !err })
+    );
+  });
+});
+
+ipcMain.handle("mark-out", (event, id) => {
+  const date = new Date().toISOString().split("T")[0];
+  const time = new Date().toLocaleTimeString();
+
+  return new Promise(resolve => {
+    db.run(
+      `UPDATE attendance SET out_time=? 
+       WHERE member_id=? AND date=?`,
+      [time, id, date],
+      err => resolve({ success: !err })
+    );
+  });
+});
+
+
+
+
+ipcMain.handle("get-monthly-attendance", (event, memberId, year, month) => {
+  const start = `${year}-${month}-01`;
+  const end = `${year}-${month}-31`;
+
+  return new Promise(resolve => {
+    db.all(
+      `SELECT * FROM attendance 
+       WHERE member_id=? 
+       AND date BETWEEN ? AND ?`,
+      [memberId, start, end],
+      (err, rows) => {
+        const present = rows.length;
+        const absent = 30 - present; // Approx month days
+        resolve({ present, absent });
+      }
+    );
+  });
+});
 
 
 
@@ -299,7 +389,7 @@ function createWindow() {
     }
   });
 
-  win.loadFile(path.join(__dirname, "html_components", "dashboard.html"));
+  win.loadFile(path.join(__dirname, "html_components", "sign_in.html"));
 }
 
 app.whenReady().then(createWindow);

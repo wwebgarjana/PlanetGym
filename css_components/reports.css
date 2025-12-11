@@ -1,25 +1,68 @@
-/* Reset defaults */
+/* Reset */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-   background: #0f1117;
+    background: #0f1117;
     color: white;
 }
 
-/* Content area */
+/* Page Content shifted for sidebar */
 .content {
-    margin-left: 300px; /* Width of the sidebar */
-    padding: 20px;
+    padding: 30px;
+    margin-left: 200px; /* sidebar width */
 }
 
-/* Example content styling */
-.content h1 {
-    font-size: 28px;
-    margin-bottom: 15px;
+/* Title */
+h2 {
+    margin-bottom: 20px;
+    color: white;
 }
 
-.content p {
-    font-size: 16px;
-    line-height: 1.5;
+/* Filter Box */
+.filter-box {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.filter-box input {
+    padding: 6px;
+}
+
+button {
+    padding: 6px 15px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Cards */
+.card {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 6px #ccc;
+    width: 100%;
+    max-width: 700px; /* looks clean */
+    color: black;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.card table th,
+.card table td {
+    padding: 6px 8px !important; /* equal padding */
+    text-align: left;
 }

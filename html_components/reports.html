@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Members</title>
+    <title>Reports</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -22,35 +22,57 @@
 
     <!-- Page Content -->
     <div class="content">
-        <h1>Reports</h1>
-        <p>Here you can display reports list or other content.</p>
+        <h2>Reports</h2>
+
+        <!-- SELECT MONTH -->
+        <div class="filter-box">
+          <label>Select Month:</label>
+          <input type="month" id="reportMonth">
+          <button id="loadReportBtn">Load Report</button>
+        </div>
+
+        
+
+         <!-- MONTHLY ATTENDANCE SUMMARY -->
+        <section class="card">
+          <h3>🗓 Monthly Attendance Summary</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Present</th>
+                <th>Absent</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTable"></tbody>
+          </table>
+        </section>
     </div>
 
     <!-- Load sidebar.html -->
     <script>
-        fetch("../html_components/sidebar.html")   // Correct path based on your folder
+        fetch("../html_components/sidebar.html")
             .then(response => response.text())
             .then(data => {
                 document.getElementById("sidebar-container").innerHTML = data;
 
-   // ---------- APPLY ACTIVE CLASS HERE ----------
-            const menuLinks = document.querySelectorAll('.sidebar .menu li a');
-            let path = window.location.pathname.split("/").pop();
+                const menuLinks = document.querySelectorAll('.sidebar .menu li a');
+                let path = window.location.pathname.split("/").pop();
 
-            if (!path) path = "reports.html";
+                if (!path) path = "reports.html";
 
-            menuLinks.forEach(link => {
-                const linkHref = link.getAttribute('href').split("/").pop().trim();
-                link.classList.remove("active");
+                menuLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href').split("/").pop().trim();
+                    link.classList.remove("active");
 
-                if (linkHref === path) {
-                    link.classList.add("active");
-                }
-            });
+                    if (linkHref === path) {
+                        link.classList.add("active");
+                    }
+                });
 
-                // Load sidebar.js after sidebar HTML
                 const script = document.createElement("script");
-                script.src = "../js_components/sidebar.js";  // Correct path
+                script.src = "../js_components/sidebar.js";
                 document.body.appendChild(script);
             });
     </script>

@@ -111,3 +111,78 @@ body {
 .back-btn i:hover {
     color: #ff7b00;        /* darker orange on hover */
 }
+.dropdown {
+    position: absolute;
+    background: white;
+    color: black;
+    padding: 10px;
+    border-radius: 6px;
+    top: 50px;
+    right: 20px;
+    width: 180px; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 99999;
+}
+
+
+/* Top Icons Wrapper */
+.top-icons {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* User Icon */
+#userIcon {
+    font-size: 20px;
+    cursor: pointer;
+    color: #f3ebeb;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+#userIcon:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown Box */
+#userDropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 180px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    padding: 10px;
+    display: none;
+    z-index: 100;
+}
+
+/* Email Text */
+#userEmail {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+    word-break: break-word;
+}
+
+/* Logout Button */
+#logoutBtn {
+    width: 100%;
+    padding: 8px;
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+#logoutBtn:hover {
+    background: #d93636;
+}
+

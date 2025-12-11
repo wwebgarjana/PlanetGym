@@ -56,8 +56,28 @@ saveBtn.addEventListener("click", async () => {
   };
 
   if (!trainer.name) return alert("Enter full name");
-  if (!trainer.email) return alert("Enter email");
-  if (!trainer.mobile) return alert("Enter mobile");
+
+// NAME → Only alphabets + spaces
+if (!/^[A-Za-z ]+$/.test(trainer.name)) {
+    return alert("Name must contain only alphabets.");
+}
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!trainer.email) return alert("Enter email");
+if (!emailRegex.test(trainer.email)) return alert("Enter valid email");
+
+// MOBILE VALIDATION
+if (!trainer.mobile) return alert("Enter mobile number");
+
+// Only digits allowed
+if (!/^[0-9]+$/.test(trainer.mobile)) {
+    return alert("Mobile number must contain only digits.");
+}
+
+// Correct length = 10 digits
+if (trainer.mobile.length !== 10) {
+    return alert("Mobile number must be exactly 10 digits.");
+}
   if (!trainer.startDate) return alert("Select joining date");
 
   try {

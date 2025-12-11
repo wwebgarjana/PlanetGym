@@ -19,9 +19,15 @@
     <div class="topbar">
         <input type="text" placeholder="Search">
        <div class="top-icons">
-    <span class="bell"><i class="fa-solid fa-bell"></i></span>
-    <span class="user"><i class="fa-solid fa-user"></i></span>
+    <span class="user" id="userIcon"><i class="fa-solid fa-user"></i></span>
+
+    <div id="userDropdown" class="dropdown" style="display:none;">
+        <p id="userEmail">Loading...</p>
+        <button id="logoutBtn">Logout</button>
+    </div>
 </div>
+
+
 
     </div>
  
@@ -30,10 +36,10 @@
             <p>Total Members</p>
             <h2>120</h2>
         </div>
-        <div class="card">
+        <!-- <div class="card">
             <p>Active Today</p>
             <h2>47</h2>
-        </div>
+        </div> -->
         <div class="card">
             <p>Revenue</p>
             <h2>₹38,500</h2>
@@ -47,8 +53,8 @@
     <div class="bottom">
         <div class="attendance box">
             <h3>Attendance</h3>
-            <button class="check">Check-in now</button>
-            <p class="usb">USB/Bioprint</p>
+            <button class="check" onClick="location.href='attendance.html'">Check-in now</button>
+            
         </div>
  
         <div class="analytics box">
@@ -85,6 +91,7 @@
                 script.src = "../js_components/sidebar.js";  // Correct path
                 document.body.appendChild(script);
             });
+            
     </script>
 
     

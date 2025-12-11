@@ -21,11 +21,22 @@
     <div id="sidebar-container"></div>
 
     <!-- Page Content -->
-    <div class="content">
-        <h1>Attendance</h1>
-        <p>Here you can display attendance list or other content.</p>
-    </div>
+     <div class="content">
+    <h2>Members Attendance</h2>
 
+<table>
+  <thead>
+    <tr>
+      
+      <th>Name</th>
+      <th>Mobile</th>
+      <th>IN</th>
+      <th>OUT</th>
+    </tr>
+  </thead>
+  <tbody id="membersTable"></tbody>
+</table>
+</div>
     <!-- Load sidebar.html -->
     <script>
         fetch("../html_components/sidebar.html")   // Correct path based on your folder

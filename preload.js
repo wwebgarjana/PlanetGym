@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld("api", {
 
     saveUser: (email, password, role) =>
         ipcRenderer.invoke("save-user", { email, password, role }),
+    
 
     checkLogin: (email, password) =>
         ipcRenderer.invoke("check-login", { email, password }),
@@ -36,6 +37,15 @@ contextBridge.exposeInMainWorld("api", {
     countTrainers: () => ipcRenderer.invoke("count-trainers"),
     totalRevenue: () => ipcRenderer.invoke("total-revenue"),
     countActiveToday: () => ipcRenderer.invoke("active-members"),
-   // refreshStatus: () => ipcRenderer.invoke("refresh-status")
+   checkTodayAttendance: (id, date) => ipcRenderer.invoke("check-today-attendance", id, date),
+  markIn: (id) => ipcRenderer.invoke("mark-in", id),
+  markOut: (id) => ipcRenderer.invoke("mark-out", id),
+getMonthlyAttendance: (id, y, m) => ipcRenderer.invoke("get-monthly-attendance", id, y, m),
+
+getUserEmail: () => ipcRenderer.invoke("get-user-email"),
+
+    logout: async () => {
+        return await ipcRenderer.invoke("logout");
+    },
 
 });
