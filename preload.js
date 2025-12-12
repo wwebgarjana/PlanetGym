@@ -48,4 +48,10 @@ getUserEmail: () => ipcRenderer.invoke("get-user-email"),
         return await ipcRenderer.invoke("logout");
     },
 
+     updatePassword: (email, newPassword) =>
+        ipcRenderer.invoke("update-password", { email, newPassword })
+
+    
+
+
 });

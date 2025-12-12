@@ -374,6 +374,25 @@ ipcMain.handle("get-monthly-attendance", (event, memberId, year, month) => {
   });
 });
 
+ipcMain.handle("update-password", async (event, data) => {
+    const { email, newPassword } = data;
+
+    const row = await db.get("SELECT * FROM users WHERE email = ?", [email]);
+
+    if(!row){
+        return false; // Email not found
+    }
+
+    await db.run("UPDATE users SET password = ? WHERE email = ?", [
+        newPassword,
+        email
+    ]);
+
+    return true;
+});
+
+
+
 
 
 
