@@ -23,6 +23,7 @@ db.run(`
   )
 `);
 
+
 // SAVE USER
 ipcMain.handle("save-user", (event, user) => {
   return new Promise(resolve => {
