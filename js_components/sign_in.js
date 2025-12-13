@@ -7,6 +7,7 @@ loginForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value.trim();
   const role = document.querySelector('input[name="role"]').value;
 
+
   // 1️⃣ FIRST TIME HARDCODED LOGIN
   if (email === "aaa@gmail.com" && password === "1234") {
     const res = await window.api.saveUser(email, password, role);
@@ -17,19 +18,41 @@ loginForm.addEventListener('submit', async (e) => {
       alert("User already exists! Logging you in...");
     }
 
-    window.location.href = "dashboard.html";  
+    //window.location.href = "dashboard.html"; 
+    
+    setTimeout(() => {
+    window.location.replace("dashboard.html");
+}, 50);
+
     return;
   }
 
   // 2️⃣ NEXT TIME — CHECK FROM DATABASE
   const loginCheck = await window.api.checkLogin(email, password);
 
-  if (loginCheck.success) {
-    alert("Login Success!");
+  if (!loginCheck.success) {
+  showMessage("Incorrect email or password!");
+  return;
+}
 
-    // PAGE REFRESH + REDIRECT
-    window.location.href = "dashboard.html";
-  } else {
-    alert("Incorrect email or password!");
-  }
+if (loginCheck.success) {
+  showMessage("Login Success!");
+  setTimeout(() => {
+    window.location.replace("dashboard.html");
+  }, 500);
+}
 });
+function showMessage(msg, duration = 2000) {
+  const box = document.getElementById("loginMessage");
+  box.innerText = msg;
+  box.style.display = "block";
+
+  setTimeout(() => {
+    box.style.display = "none";
+  }, duration);
+}
+
+
+
+
+

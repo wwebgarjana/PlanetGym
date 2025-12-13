@@ -36,7 +36,7 @@ h2 {
 button {
     padding: 6px 15px;
     border: none;
-    background: #007bff;
+    background: orange;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -65,4 +65,10 @@ table {
 .card table td {
     padding: 6px 8px !important; /* equal padding */
     text-align: left;
+}
+.error-msg{
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-top: 3px;
 }

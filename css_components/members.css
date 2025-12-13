@@ -1,3 +1,4 @@
+
 /* Reset defaults */
 body {
     margin: 0;
@@ -17,11 +18,14 @@ body {
 
 
 /* Content area */
-.header {
-    display:flex;
-    justify-content:space-between;
-    padding:20px;
-   
+.head {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    color: white;
+    margin-top: 30px; /* increase this */
+    margin-left: 220px;
+    font-size: 15px;
 }
  
 #addMemberBtn {
@@ -47,7 +51,7 @@ body {
 }
 
 
-.member-row {
+/* .member-row {
     display: grid;
     grid-template-columns: 180px 120px 120px 120px 60px;
     align-items: center;
@@ -61,8 +65,25 @@ body {
     font-weight: bold;
     display: grid;
     grid-template-columns: 180px 120px 120px 120px 60px;
+} */
+
+.member-row {
+    display: grid;
+    grid-template-columns: 230px 140px 140px 120px 80px; /* SAME AS HEADER */
+    align-items: center;
+    padding: 6px 0;
+    margin-top: 12px;
+    color: black;
 }
-.member-name {
+
+.member-row.header {
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 230px 140px 140px 120px 80px /* MATCHED */
+}
+
+
+/* .member-name {
     max-width: 140px; 
     white-space: normal;
     word-wrap: break-word;
@@ -75,6 +96,12 @@ body {
 }
 .col-status {
     width: 80px;
+} */
+
+.col-member {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 
@@ -98,8 +125,8 @@ body {
     text-align: center;
 }
  
-.expired { background: #e74c3c; }
-.pending { background: #f39c12; }
+/* .expired { background: #e74c3c; }
+.pending { background: #f39c12; } */
 
  
 /* Modal */
@@ -247,4 +274,11 @@ input, select {
   .item-info .name { font-size: 18px; }
   .item-info .days { font-size: 16px; }
   .sms-btn { font-size: 16px; padding: 10px; }
+}
+
+.error-msg{
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-top: 3px;
 }

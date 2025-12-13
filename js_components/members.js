@@ -1,4 +1,73 @@
+
+
 // members.js (frontend)
+function validateMemberForm(member) {
+  let isValid = true;
+
+  // clear old errors
+  document.querySelectorAll(".error-msg").forEach(e => {
+    e.style.display = "none";
+    e.innerText = "";
+  });
+
+  if (!member.photo) {
+    showError("profileError", "Photo is required");
+    isValid = false;
+  }
+
+  // NAME
+  if (!member.name) {
+    showError("nameError", "Full name is required");
+    isValid = false;
+  } else if (!/^[A-Za-z ]+$/.test(member.name)) {
+    showError("nameError", "Only alphabets allowed");
+    isValid = false;
+  }
+
+  // EMAIL
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!member.email) {
+    showError("emailError", "Email is required");
+    isValid = false;
+  } else if (!emailRegex.test(member.email)) {
+    showError("emailError", "Enter valid email");
+    isValid = false;
+  }
+
+  // MOBILE
+  if (!member.mobile) {
+    showError("mobileError", "Mobile number is required");
+    isValid = false;
+  } else if (!/^[0-9]{10}$/.test(member.mobile)) {
+    showError("mobileError", "Enter 10 digit mobile number");
+    isValid = false;
+  }
+
+  if (!member.plan) {
+    showError("planError", "Plan is required");
+    isValid = false;
+  }
+
+  // =====================
+  // START DATE
+  // =====================
+  if (!member.startDate) {
+    showError("dateError", "Start date is required");
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerText = msg;
+  el.style.display = "block";
+}
+
+
+
 let membersData = [];  // store loaded members
  
 const addBtn = document.getElementById("addMemberBtn");
@@ -98,78 +167,62 @@ saveBtn.addEventListener("click", async () => {
   const file = photoInput.files && photoInput.files[0];
   const photoBase64 = await readImageAsBase64(file).catch(() => "");
  
-  const member = {
-    id: editId,
-    photo: photoBase64 || "",
-    name: document.getElementById("fullName").value.trim(),
-    email: document.getElementById("email").value.trim(),
-    mobile: document.getElementById("mobileNo").value.trim(),
-    plan: document.getElementById("plan").value,
-    startDate: document.getElementById("startDate").value,
-    endDate: document.getElementById("endDate").value,
-   // status: calculateStatus(document.getElementById("startDate").value, document.getElementById("endDate").value)
-    
+// 🔹 find existing member (for update)
+const existingMember = editId
+  ? membersData.find(m => String(m.id) === String(editId))
+  : null;
+
+const member = {
+  id: editId,
+  // ✅ agar new photo select ki hai → wahi use karo
+  // ✅ warna purani photo hi rakho
+  photo: photoBase64
+    ? photoBase64
+    : (existingMember?.photo || ""),
+
+  name: document.getElementById("fullName").value.trim(),
+  email: document.getElementById("email").value.trim(),
+  mobile: document.getElementById("mobileNo").value.trim(),
+  plan: document.getElementById("plan").value,
+  startDate: document.getElementById("startDate").value,
+  endDate: document.getElementById("endDate").value
 };
 
-// BASIC VALIDATION
-if (!member.name) return alert("Enter full name");
 
-// NAME → Only alphabets + spaces
-if (!/^[A-Za-z ]+$/.test(member.name)) {
-    return alert("Name must contain only alphabets.");
-}
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!member.email) return alert("Enter email");
-if (!emailRegex.test(member.email)) return alert("Enter valid email");
+ // ✅ NEW VALIDATION
+  if (!validateMemberForm(member)) return;
 
-// MOBILE VALIDATION
-if (!member.mobile) return alert("Enter mobile number");
-
-// Only digits allowed
-if (!/^[0-9]+$/.test(member.mobile)) {
-    return alert("Mobile number must contain only digits.");
-}
-
-// Correct length = 10 digits
-if (member.mobile.length !== 10) {
-    return alert("Mobile number must be exactly 10 digits.");
-}
-
-if (!member.plan) return alert("Choose plan");
-if (!member.startDate) return alert("Choose start date");
-
- 
   try {
-    if (editId) {
-      // UPDATE
-      const result = await window.api.updateMember(member);
-      if (result && result.success) {
-        modal.style.display = "none";
-        modal.removeAttribute("data-edit-id");
-        saveBtn.innerText = "Save";
-        clearModalFields();
-        await loadMembers();
-      } else {
-        alert("Update failed");
-      }
-    } else {
-      // SAVE NEW
-      const result = await window.api.saveMember(member);
-      if (result && result.success) {
-        modal.style.display = "none";
-        clearModalFields();
-        await loadMembers();
-      } else {
-        alert("Save failed");
-      }
+    const result = editId
+      ? await window.api.updateMember(member)
+      : await window.api.saveMember(member);
+
+    if (result?.success) {
+      modal.style.display = "none";
+      modal.removeAttribute("data-edit-id");
+      saveBtn.innerText = "Save";
+      clearModalFields();
+      loadMembers();
     }
   } catch (err) {
     console.error(err);
-    alert("Operation failed: " + (err.message || err));
   }
 });
- 
+
+// -----------------------------
+// CLEAR MODAL
+// -----------------------------
+function clearModalFields() {
+  photoInput.value = "";
+  fullName.value = "";
+  email.value = "";
+  mobileNo.value = "";
+  plan.value = "";
+  startDate.value = "";
+  endDate.value = "";
+}
+
 // -----------------------------
 // LOAD MEMBERS
 // -----------------------------
@@ -180,11 +233,11 @@ async function loadMembers() {
   // header row
   container.innerHTML += `
     <div class="member-row header">
-      <div class="col-memberr" style="margin-left: 25px;">Member</div>
-      <div class="col-datee">Start Date</div>
-      <div class="col-enddatee">End Date</div>
-      <div class="col-statuss">Status</div>
-      <div class="col-actionn">Action</div>
+      <div class="col-member" style="margin-left: 25px;">Member</div>
+      <div class="col-date">Start Date</div>
+      <div class="col-enddate">End Date</div>
+      <div class="col-status">Status</div>
+      <div class="col-action">Action</div>
     </div>
   `;
  
@@ -445,5 +498,9 @@ async function loadExpiringWidget() {
     });
 }
 loadExpiringWidget();
+
+
+
+
 
 

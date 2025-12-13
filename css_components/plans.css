@@ -11,25 +11,26 @@ body {
 /* Header */
 .plans-header {
     display: flex;
-   align-items: center;
-    margin-bottom: 25px;
-    margin-top: 40px;
+    justify-content: space-between;
+    padding: 20px;
+    color: white;
+    margin-top: 30px; /* increase this */
+    margin-left: 220px;
+    font-size: 15px;
+
 }
 
-.plans-header h1 {
-    margin-left: 200px;
-    color: white;
-}
+
 
 .add-plan-btn {
-    background: #ff9d00;
-    color: white;
-    border: 0;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    margin-left: 400px;
+     background: orange;
+    color:white;
+    padding:10px 10px;
+    height: 33px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
 /* Cards Layout */
@@ -221,4 +222,11 @@ body {
 }
 .delete-btn.hidden{
      display: none ;
+}
+
+.error-msg{
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-top: 3px;
 }

@@ -1,3 +1,61 @@
+function validateMemberForm(trainer) {
+  let isValid = true;
+
+  // clear old errors
+  document.querySelectorAll(".error-msg").forEach(e => {
+    e.style.display = "none";
+    e.innerText = "";
+  });
+
+  if (!trainer.photo) {
+    showError("profileError", "Photo is required");
+    isValid = false;
+  }
+
+  // NAME
+  if (!trainer.name) {
+    showError("nameError", "Full name is required");
+    isValid = false;
+  } else if (!/^[A-Za-z ]+$/.test(trainer.name)) {
+    showError("nameError", "Only alphabets allowed");
+    isValid = false;
+  }
+
+  // EMAIL
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!trainer.email) {
+    showError("emailError", "Email is required");
+    isValid = false;
+  } else if (!emailRegex.test(trainer.email)) {
+    showError("emailError", "Enter valid email");
+    isValid = false;
+  }
+
+  // MOBILE
+  if (!trainer.mobile) {
+    showError("mobileError", "Mobile number is required");
+    isValid = false;
+  } else if (!/^[0-9]{10}$/.test(trainer.mobile)) {
+    showError("mobileError", "Enter 10 digit mobile number");
+    isValid = false;
+  }
+
+  if (!trainer.startDate) {
+    showError("dateError", "Joining date is required");
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerText = msg;
+  el.style.display = "block";
+}
+
+
 let trainerData = [];
 
 const addBtn = document.getElementById("addTrainerBtn");
@@ -46,60 +104,60 @@ saveBtn.addEventListener("click", async () => {
   const file = photoInput.files && photoInput.files[0];
   const photoBase64 = await readImageAsBase64(file);
 
-  const trainer = {
-    id: editId,
-    photo: photoBase64 || "",
-    name: document.getElementById("fullName").value.trim(),
-    email: document.getElementById("email").value.trim(),
-    mobile: document.getElementById("mobileNo").value.trim(),
-    startDate: document.getElementById("startDate").value
-  };
+  
+  // 🔹 existing trainer find karo (update ke liye)
+const existingTrainer = editId
+  ? trainerData.find(t => String(t.id) === String(editId))
+  : null;
 
-  if (!trainer.name) return alert("Enter full name");
+const trainer = {
+  id: editId,
 
-// NAME → Only alphabets + spaces
-if (!/^[A-Za-z ]+$/.test(trainer.name)) {
-    return alert("Name must contain only alphabets.");
-}
+  // ✅ new photo hai to use karo
+  // ✅ warna purani wali hi rakho
+  photo: photoBase64
+    ? photoBase64
+    : (existingTrainer?.photo || ""),
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!trainer.email) return alert("Enter email");
-if (!emailRegex.test(trainer.email)) return alert("Enter valid email");
+  name: document.getElementById("fullName").value.trim(),
+  email: document.getElementById("email").value.trim(),
+  mobile: document.getElementById("mobileNo").value.trim(),
+  startDate: document.getElementById("startDate").value
+};
 
-// MOBILE VALIDATION
-if (!trainer.mobile) return alert("Enter mobile number");
 
-// Only digits allowed
-if (!/^[0-9]+$/.test(trainer.mobile)) {
-    return alert("Mobile number must contain only digits.");
-}
-
-// Correct length = 10 digits
-if (trainer.mobile.length !== 10) {
-    return alert("Mobile number must be exactly 10 digits.");
-}
-  if (!trainer.startDate) return alert("Select joining date");
+ // ✅ NEW VALIDATION
+  if (!validateMemberForm(trainer)) return;
 
   try {
-    if (editId) {
-      const res = await window.api.updateTrainer(trainer);
-      if (res.success) {
-        modal.style.display = "none";
-        clearModalFields();
-        loadTrainers();
-      } else alert("Update failed");
-    } else {
-      const res = await window.api.saveTrainer(trainer);
-      if (res.success) {
-        modal.style.display = "none";
-        clearModalFields();
-        loadTrainers();
-      } else alert("Save failed");
+    const result = editId
+      ? await window.api.updateTrainer(trainer)
+      : await window.api.saveTrainer(trainer);
+
+    if (result?.success) {
+      modal.style.display = "none";
+      modal.removeAttribute("data-edit-id");
+      saveBtn.innerText = "Save";
+      clearModalFields();
+      loadTrainers();
     }
   } catch (err) {
     console.error(err);
   }
 });
+
+// -----------------------------
+// CLEAR MODAL
+// -----------------------------
+function clearModalFields() {
+  photo.value = "";
+  name.value = "";
+  email.value = "";
+  mobile.value = "";
+  startDate.value = "";
+ 
+}
+
 
 // LOAD TRAINERS
 async function loadTrainers() {

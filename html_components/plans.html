@@ -15,10 +15,11 @@
 
     <div class="content">
 
-        <div class="plans-header">
-            <h1>Membership Plans</h1>
-            <button id="openFormBtn" class="add-plan-btn">Add Plan</button>
+         <div class="plans-header">
+            <h2>Membership Plans</h2>
+            <button id="openFormBtn" class="add-plan-btn">+ Add Plan</button>
         </div>
+        
 
         <div class="plans-scroll">
             <div id="plansContainer" class="plans-container"></div>
@@ -53,9 +54,12 @@
 
             <label>Price (₹)</label>
             <input type="number" id="planPrice" placeholder="Enter price">
+            <small class="error-msg" id="priceError"></small>
 
             <label>Facilities (comma separated)</label>
             <input type="text" id="planFacilities" placeholder="Gym Access, Locker, Group Classes">
+            <small class="error-msg" id="dataError"></small>
+
 
             <button id="savePlanBtn" class="save-btn">Save Plan</button>
             <button id="closeFormBtn" class="close-btn">Cancel</button>

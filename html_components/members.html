@@ -20,7 +20,7 @@
   <div id="sidebar-container"></div>
  
   <!-- Page Content -->
-  <div class="header">
+  <div class="head">
     <h2>Members</h2>
     <button id="addMemberBtn">+ Add Member</button>
   </div>
@@ -40,21 +40,25 @@
       <div class="form-group">
         <label>Upload Photo</label>
         <input type="file" id="photo" accept="image/*">
+         <small class="error-msg" id="profileError"></small>
       </div>
  
       <div class="form-group">
         <label>Full Name</label>
         <input type="text" id="fullName">
+        <small class="error-msg" id="nameError"></small>
       </div>
  
       <div class="form-group">
         <label>Email Address</label>
         <input type="email" id="email">
+        <small class="error-msg" id="emailError"></small>
       </div>
  
      <div class="form-group">
     <label>Mobile No</label>
     <input type="tel" id="mobileNo" maxlength="10" pattern="\d{10}">
+    <small class="error-msg" id="mobileError"></small>
 </div>
 
  
@@ -66,11 +70,13 @@
           <option value="3">3 Months</option>
           <option value="6">6 Months</option>
         </select>
+         <small class="error-msg" id="planError"></small>
       </div>
  
       <div class="form-group">
         <label>Start Date</label>
         <input type="date" id="startDate">
+         <small class="error-msg" id="dateError"></small>
       </div>
  
       <div class="form-group">

@@ -1,18 +1,33 @@
 document.getElementById("loadReportBtn").onclick = loadReports;
 
+function showError(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerText = msg;
+    el.style.display = "block";
+}
+
+function clearErrors() {
+    document.querySelectorAll(".error-msg").forEach(e => {
+        e.innerText = "";
+        e.style.display = "none";
+    });
+}
+
 async function loadReports() {
+  clearErrors(); // clear old errors
+
   let monthInput = document.getElementById("reportMonth").value;
 
   if (!monthInput) {
-    alert("Please select month");
+    showError("monthError", "Please select month");
     return;
   }
 
   const [year, month] = monthInput.split("-");
 
   // Load Revenue Report
- 
-
+  // ...
 
   // Load Attendance Summary
   const members = await window.api.getMembers();

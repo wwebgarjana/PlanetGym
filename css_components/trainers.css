@@ -12,7 +12,8 @@ body {
     display:flex;
     justify-content:space-between;
     padding:20px;
-    margin-left: 300px;
+    margin-left: 220px;
+     font-size: 15px;
 }
  
 #addTrainerBtn {
@@ -33,7 +34,7 @@ body {
     background: #f0eaea;
     padding: 20px;
     border-radius: 12px;
-    margin-left: 300px;
+    margin-left: 220px;
 }
 
 
@@ -172,4 +173,11 @@ input, select {
     word-wrap: break-word;
     white-space: normal;
     min-width: 70px;
+}
+
+.error-msg{
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-top: 3px;
 }
